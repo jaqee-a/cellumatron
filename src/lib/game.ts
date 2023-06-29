@@ -2,6 +2,8 @@ import { Air, Sand } from "./element";
 import { Grid } from "./grid";
 import { KeyboardInput } from "./keyboardinput";
 import { MouseInput } from "./mouseinput";
+import { Tool } from "./tools";
+import { Brush } from "./tools/brush";
 
 
 interface GameOptions {
@@ -13,10 +15,15 @@ interface GameOptions {
 
 export class Game {
 
+    public static instance: Game;
+
     private dataGrid: Grid;
+    
+    selectedTool: Tool = Brush.instance;
 
     constructor(private options: GameOptions) {
         this.dataGrid =  new Grid(this.options);
+        Game.instance = this;
     }
 
     getGrid(): Grid {
@@ -25,18 +32,19 @@ export class Game {
 
 
     update(_: number): void {
-        if(KeyboardInput.isDown('s')) {
-            
-            const i = Math.random() * this.options.width  << 0;
-            const j = Math.random() * this.options.height << 0;
-            
-            this.dataGrid.setElementAt(i, j, Sand);
-        }
+        this.selectedTool.use();
+        // if(KeyboardInput.isDown('s')) {
+        //     
+        //     const i = Math.random() * this.options.width  << 0;
+        //     const j = Math.random() * this.options.height << 0;
+        //     
+        //     this.dataGrid.setElementAt(i, j, Sand);
+        // }
 
-        if(MouseInput.getButton(0)) {
-            const {x, y} = MouseInput.position;
-            this.dataGrid.setElementAt(x, y, Sand);
-        }
+        // if(MouseInput.getButton(0)) {
+        //     const {x, y} = MouseInput.position;
+        //     this.dataGrid.setElementAt(x, y, Sand);
+        // }
 
         // ADD NEW ELEMENTS
         
