@@ -21,7 +21,7 @@ export class Cellumatron {
 
 
     // Game options
-    cellSize: number = 10;
+    cellSize: number = 5;
     avgFPS: number = -1;
 
 
@@ -50,10 +50,10 @@ export class Cellumatron {
         top  = Math.floor(top);
         left = Math.floor(left);
         
-        this.canvasEventHandler.on("mousemove", this.onMouseMoveHandler);
-        this.canvasEventHandler.on("mousedown", this.onMouseDownHandler);
-        this.canvasEventHandler.on("mouseup"  , this.onMouseUpHandler  );
-        this.canvasEventHandler.on("keydown"  , this.onKeyDownHandler  );
+        this.canvasEventHandler.on("mousemove", (...args)=>{this.onMouseMoveHandler(...args)});
+        this.canvasEventHandler.on("mousedown", (...args)=>{this.onMouseDownHandler(...args)});
+        this.canvasEventHandler.on("mouseup"  , (...args)=>{this.onMouseUpHandler(...args)  });
+        this.canvasEventHandler.on("keydown"  , (...args)=>{this.onKeyDownHandler(...args)  });
 
         document.addEventListener("keydown", (e) => {
             this.canvasEventHandler.emit("keydown", e.key);
@@ -80,7 +80,7 @@ export class Cellumatron {
     }
 
     onMouseMoveHandler(x: number, y: number): void {
-        MouseInput.setPosition(Math.floor(x / 10), Math.floor(y / 10));
+        MouseInput.setPosition(Math.floor(x / this.cellSize), Math.floor(y / this.cellSize));
     }
 
     onMouseDownHandler(x: number, y: number, button: number): void {

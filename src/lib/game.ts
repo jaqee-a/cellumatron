@@ -46,7 +46,7 @@ export class Game {
             const ele = this.dataGrid.getElementAt(i, j);
             const down = this.dataGrid.getElementAt(i, j+1);
 
-            if(down === Air) {
+            if(ele != Air && down === Air) {
                 this.dataGrid.setElementAt(i, j, down);
                 this.dataGrid.setElementAt(i, j+1, ele);
             }

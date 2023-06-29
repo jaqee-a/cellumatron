@@ -35,7 +35,8 @@ export class CustomEventHandler implements IEventHandler {
     }
 
     emit(handle: EventHandle, ...args: any): void {
-        this.eventMap.get(handle)?.call(null, ...args);
+        if(this.eventMap.has(handle))
+        (this.eventMap.get(handle)!)(...args);
     }
 
 }

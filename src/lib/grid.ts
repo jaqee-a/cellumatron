@@ -23,7 +23,7 @@ export class Grid {
     public getElementAt(x: number, y: number) {
         if(x < 0 || x >= this.options.width ||
            y < 0 || y >= this.options.height) {
-            console.error(`${x}-${y} is out of grid bound`);
+            // console.error(`${x}-${y} is out of grid bound`);
             return;
         }
         return this.grid[x][y];
@@ -32,7 +32,7 @@ export class Grid {
     public setElementAt(x: number, y: number, value: Element) {
         if(x < 0 || x >= this.options.width ||
            y < 0 || y >= this.options.height) {
-            console.error(`${x}-${y} is out of grid bound`);
+            // console.error(`${x}-${y} is out of grid bound`);
             return;
         }
         this.grid[x][y] = value;
