@@ -75,7 +75,7 @@ export class Cellumatron {
         })
     }
 
-    onMouseUpHandler(x: number, y: number, button: number): void {
+    onMouseUpHandler(_: number, __: number, button: number): void {
         MouseInput.setButton(button as (0 | 1 | 2), false);
     }
 
@@ -83,7 +83,7 @@ export class Cellumatron {
         MouseInput.setPosition(Math.floor(x / this.cellSize), Math.floor(y / this.cellSize));
     }
 
-    onMouseDownHandler(x: number, y: number, button: number): void {
+    onMouseDownHandler(_: number, __: number, button: number): void {
         MouseInput.setButton(button as (0 | 1 | 2), true);
     }
 

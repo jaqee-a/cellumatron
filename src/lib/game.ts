@@ -24,7 +24,7 @@ export class Game {
     }
 
 
-    update(dt: number): void {
+    update(_: number): void {
         if(KeyboardInput.isDown('s')) {
             
             const i = Math.random() * this.options.width  << 0;
@@ -46,9 +46,9 @@ export class Game {
             const ele = this.dataGrid.getElementAt(i, j);
             const down = this.dataGrid.getElementAt(i, j+1);
 
-            if(ele != Air && down === Air) {
+            if(ele !== null && ele != Air && down === Air) {
                 this.dataGrid.setElementAt(i, j, down);
-                this.dataGrid.setElementAt(i, j+1, ele);
+                this.dataGrid.setElementAt(i, j+1, ele!);
             }
         }
     }

@@ -1,11 +1,6 @@
 import { Grid } from "./grid";
 import { Context2DRenderer } from "./context2drenderer";
-
-
-
-
-
-
+import { Element } from "./element";
 
 
 export class GridRenderer {
@@ -22,7 +17,8 @@ export class GridRenderer {
         
         for(let i=0;i<w;++i) {
             for(let j=0;j<h;++j) {
-                const element = this.grid.getElementAt(i, j);
+                const element: Element | null = this.grid.getElementAt(i, j);
+                if (element === null) continue;
 
                 const screenX = i * this.cellSize;
                 const screenY = j * this.cellSize;
@@ -31,9 +27,9 @@ export class GridRenderer {
                 for(let dy=screenY;dy<screenY+this.cellSize;++dy) {
                     const index = (dy*dim.width+dx)*4;
                     
-                    imageArray[ index ]=element.color.r;
-                    imageArray[index+1]=element.color.g;
-                    imageArray[index+2]=element.color.b;
+                    imageArray[ index ]=element!.color.r;
+                    imageArray[index+1]=element!.color.g;
+                    imageArray[index+2]=element!.color.b;
                     imageArray[index+3]=255;
                 }
 

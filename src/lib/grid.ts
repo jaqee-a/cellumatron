@@ -20,16 +20,16 @@ export class Grid {
         }
     }
 
-    public getElementAt(x: number, y: number) {
+    public getElementAt(x: number, y: number): Element | null {
         if(x < 0 || x >= this.options.width ||
            y < 0 || y >= this.options.height) {
             // console.error(`${x}-${y} is out of grid bound`);
-            return;
+            return null;
         }
         return this.grid[x][y];
     }
 
-    public setElementAt(x: number, y: number, value: Element) {
+    public setElementAt(x: number, y: number, value: Element): void {
         if(x < 0 || x >= this.options.width ||
            y < 0 || y >= this.options.height) {
             // console.error(`${x}-${y} is out of grid bound`);
