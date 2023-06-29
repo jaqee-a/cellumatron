@@ -19,7 +19,7 @@ export function ElementPicker() {
     return (
         <div>
             {
-                allElements.map((value: any)=><button onClick={()=>handleClickOnElement(value)}>{value.name}</button>)
+                allElements.map((value: any)=><button onClick={()=>handleClickOnElement(value)}>{value.id}- {value.name}</button>)
             }
             <button onClick={handleCreateNewElement}>Create</button>
         </div>
