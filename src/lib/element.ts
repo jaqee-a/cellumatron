@@ -1,17 +1,17 @@
 import { Color } from "./color";
 
-interface Rule {
+export interface Rule {
     offsetX: number;
     offsetY: number;
     expect: number; // ID
 };
 
-interface RuleAction {
+export interface RuleAction {
     updateOffsetX: number;
     updateOffsetY: number;
     updateWith: number; // ID
 }
-interface RuleCluster {
+export interface RuleCluster {
     rules: Array<Rule>;
     actions: Array<RuleAction>;
 } 
@@ -114,6 +114,10 @@ const CUSTOM_ELEMENTS: Array<Element> = new Array<Element>();
 export function registerNewElement(element: Element): void {
     element.id = CUSTOM_ELEMENTS.length;
     CUSTOM_ELEMENTS.push(element);
+}
+
+export function getAllElements(): Array<Element> {
+    return CUSTOM_ELEMENTS;
 }
 
 export function getElementById(id: number): Element {
