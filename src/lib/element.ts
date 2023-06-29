@@ -136,6 +136,13 @@ export function getAllElements(): Array<Element> {
     return CUSTOM_ELEMENTS;
 }
 
+export function loadAllElements(elements: Array<Element>): void {
+    CUSTOM_ELEMENTS.length = elements.length;
+    for(let i=0;i<elements.length;++i) {
+        CUSTOM_ELEMENTS[i] = elements[i];
+    }
+}
+
 export function getAllElementsForRedux(): Array<{id: number, name: string, color: string}> {
     return CUSTOM_ELEMENTS.map((value: Element)=>{
 
