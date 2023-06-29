@@ -1,13 +1,17 @@
 import { styled } from "styled-components";
 import { Canvas } from "./components/Canvas";
 import { ElementManager } from "./components/ElementManager";
+import { ElementPicker } from "./components/ElementPicker";
 
 function App() {
     return (
-        <AppContainer>
-            <Canvas width={1000} height={1000}/>
-            <ElementManager />
-        </AppContainer>
+        <div>
+            <AppContainer>
+                <Canvas width={1000} height={1000}/>
+                <ElementManager />
+            </AppContainer>
+            <ElementPicker />
+        </div>
     );
 }
 

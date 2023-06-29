@@ -14,18 +14,18 @@ interface ActionProps {
 export function Action({clusters, clusterIndex, actionIndex, setRuleClusters}: ActionProps) {
 
     const handleOnOffsetXUpdate = (e: BaseSyntheticEvent) => {
-        clusters[clusterIndex].actions[actionIndex].updateOffsetX = e.target.value;
-        setRuleClusters(clusters);
+        clusters[clusterIndex].actions[actionIndex].updateOffsetX = +e.target.value;
+        setRuleClusters([...clusters]);
     }
 
     const handleOnOffsetYUpdate = (e: BaseSyntheticEvent) => {
-        clusters[clusterIndex].actions[actionIndex].updateOffsetY = e.target.value;
-        setRuleClusters(clusters);
+        clusters[clusterIndex].actions[actionIndex].updateOffsetY = +e.target.value;
+        setRuleClusters([...clusters]);
     }
 
     const handleOnUpdateWithUpdate = (e: BaseSyntheticEvent) => {
-        clusters[clusterIndex].actions[actionIndex].updateWith = e.target.value;
-        setRuleClusters(clusters);
+        clusters[clusterIndex].actions[actionIndex].updateWith = +e.target.value;
+        setRuleClusters([...clusters]);
     }
     return (
         <ActionContainer>

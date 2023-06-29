@@ -17,7 +17,7 @@ export interface RuleCluster {
 } 
 
 export interface Element {
-    id?: number;
+    id: number;
     name: string;
     color: Color;
     ruleClusters: Array<RuleCluster>;
@@ -32,6 +32,7 @@ export enum ElementType {
 
 
 const Sand: Element = {
+    id: 1,
     name: "Sand",
     color: Color.fromRGB(218, 224, 38),
     ruleClusters: [
@@ -102,6 +103,7 @@ const Sand: Element = {
 };
 
 const Air: Element = {
+    id: 0,
     name: "Air",
     color: Color.fromRGB(255, 255, 255),
     ruleClusters: []
@@ -111,13 +113,40 @@ const Air: Element = {
 
 const CUSTOM_ELEMENTS: Array<Element> = new Array<Element>();
 
+export function createNewElement() {
+    const element: Element = {
+        id: CUSTOM_ELEMENTS.length,
+        name: "New Element",
+        color: Color.fromRGB(0, 0, 0),
+        ruleClusters: []
+    };
+
+    registerNewElement(element);
+}
+
+export function updateElement(element: Element): void {
+    CUSTOM_ELEMENTS[element.id] = element;
+}
+
 export function registerNewElement(element: Element): void {
-    element.id = CUSTOM_ELEMENTS.length;
     CUSTOM_ELEMENTS.push(element);
 }
 
 export function getAllElements(): Array<Element> {
     return CUSTOM_ELEMENTS;
+}
+
+export function getAllElementsForRedux(): Array<{id: number, name: string, color: string}> {
+    return CUSTOM_ELEMENTS.map((value: Element)=>{
+
+        const res: {id: number, name: string, color: string} = {
+            id: value.id!,
+            name: value.name,
+            color: value.color.hex
+        };
+
+        return res;
+    });
 }
 
 export function getElementById(id: number): Element {

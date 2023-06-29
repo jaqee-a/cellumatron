@@ -19,8 +19,9 @@ export class Brush extends Tool {
 
     private options: BrushOptions = {size: 5, selectedElement: ElementType.CUSTOM};
 
-    public setOptions(options: BrushOptions) {
-        this.options = options;
+    public getOption(key: string) {
+        // @ts-ignore
+        return this.options[key];
     }
 
     public use(): void {

@@ -13,18 +13,18 @@ interface RuleProps {
 export function Rule({clusters, clusterIndex, ruleIndex, setRuleClusters}: RuleProps) {
 
     const handleOnOffsetXUpdate = (e: BaseSyntheticEvent) => {
-        clusters[clusterIndex].rules[ruleIndex].offsetX = e.target.value;
-        setRuleClusters(clusters);
+        clusters[clusterIndex].rules[ruleIndex].offsetX = +e.target.value;
+        setRuleClusters([...clusters]);
     }
 
     const handleOnOffsetYUpdate = (e: BaseSyntheticEvent) => {
-        clusters[clusterIndex].rules[ruleIndex].offsetY = e.target.value;
-        setRuleClusters(clusters);
+        clusters[clusterIndex].rules[ruleIndex].offsetY = +e.target.value;
+        setRuleClusters([...clusters]);
     }
 
     const handleOnExpectUpdate = (e: BaseSyntheticEvent) => {
-        clusters[clusterIndex].rules[ruleIndex].expect = e.target.value;
-        setRuleClusters(clusters);
+        clusters[clusterIndex].rules[ruleIndex].expect = +e.target.value;
+        setRuleClusters([...clusters]);
     }
     return (
         <RuleContainer>

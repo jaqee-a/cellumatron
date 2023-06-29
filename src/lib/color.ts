@@ -29,6 +29,12 @@ export class Color {
     public static fromHex(hex: string): Color {
         const color: Color = new Color();
         color.hex = hex;
+        const int = parseInt(hex.substring(1), 16);
+
+        color.r = int >> 16 & 255;
+        color.g = int >> 8  & 255;
+        color.b = int >> 0  & 255;
+        
         return color;
     }
 }
