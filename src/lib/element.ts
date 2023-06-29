@@ -24,9 +24,58 @@ export interface Element {
 
 export enum ElementType {
     SAND,
+    WATER,
     AIR
 }
 
+
+const Water: Element = {
+    color: Color.fromRGB(36, 70, 204),
+    ruleClusters: [
+        {
+            rules: [
+                {
+                    offsetX: 0,
+                    offsetY: 1,
+                    expect: ElementType.AIR
+                }
+            ],
+            actions: [
+                {
+                    updateOffsetX: 0,
+                    updateOffsetY: 1,
+                    updateWith: ElementType.WATER
+                },
+                {
+                    updateOffsetX: 0,
+                    updateOffsetY: 0,
+                    updateWith: ElementType.AIR
+                }
+            ]
+        },
+        {
+            rules: [
+                {
+                    offsetX: 0,
+                    offsetY: 1,
+                    expect: ElementType.SAND
+                }
+            ],
+            actions: [
+                {
+                    updateOffsetX: 0,
+                    updateOffsetY: 1,
+                    updateWith: ElementType.WATER
+                },
+                {
+                    updateOffsetX: 0,
+                    updateOffsetY: 0,
+                    updateWith: ElementType.SAND
+                }
+            ]
+        }
+    ]
+}
 
 const Sand: Element = {
     color: Color.fromRGB(218, 224, 38),
@@ -107,6 +156,7 @@ const Air: Element = {
 export function getElementFromType(type: ElementType): Element {
     switch(type) {
         case ElementType.SAND:return Sand;
+        case ElementType.WATER:return Water;
         case ElementType.AIR:return Air
     }
 }

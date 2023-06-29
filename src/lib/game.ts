@@ -1,5 +1,6 @@
 import { ElementType, Element, getElementFromType } from "./element";
 import { Grid } from "./grid";
+import { KeyboardInput } from "./keyboardinput";
 import { Tool } from "./tools";
 import { Brush } from "./tools/brush";
 
@@ -30,6 +31,15 @@ export class Game {
 
 
     update(_: number): void {
+
+        if(KeyboardInput.isDown('s')) {
+            this.selectedTool.setOption('selectedElement', ElementType.SAND);
+        }
+
+        if(KeyboardInput.isDown('w')) {
+            this.selectedTool.setOption('selectedElement', ElementType.WATER);
+        }
+
         // ADD NEW ELEMENTS
         this.selectedTool.use();
 

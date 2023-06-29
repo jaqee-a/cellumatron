@@ -8,7 +8,8 @@ import { Tool } from "../tools";
 
 interface BrushOptions {
     size: number;
-}
+    selectedElement: ElementType;
+};
 
 
 
@@ -16,7 +17,7 @@ export class Brush extends Tool {
 
     public static instance: Tool = new Brush();
 
-    private options: BrushOptions = {size: 5};
+    private options: BrushOptions = {size: 5, selectedElement: ElementType.SAND};
 
     public setOptions(options: BrushOptions) {
         this.options = options;
@@ -35,9 +36,15 @@ export class Brush extends Tool {
         for(let i=-middle;i<middle+1;++i)
         for(let j=-middle;j<middle+1;++j)
         {
-            grid.setElementAt(x+i, y+j, ElementType.SAND);
+            grid.setElementAt(x+i, y+j, this.options.selectedElement);
         }
         // Dynamic
+    }
+
+    public setOption(key: string, value: any): void {
+        // TODO: CHANGE
+        // @ts-ignore
+        this.options[key] = value;
     }
     
 }
