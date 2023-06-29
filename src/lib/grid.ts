@@ -1,4 +1,4 @@
-import { Air, Element } from "./element";
+import { ElementType } from "./element";
 
 
 
@@ -10,17 +10,21 @@ interface GridOptions {
 
 export class Grid {
 
-    private grid: Element[][];
+    private grid: ElementType[][];
+    private replacementGrid: ElementType[][];
 
     constructor(private options: GridOptions) {
-        this.grid = new Array<Element[]>(this.options.width);
+        this.grid = new Array<ElementType[]>(this.options.width);
+        this.replacementGrid = new Array<ElementType[]>(this.options.width);
         for(let i=0;i<this.options.width;++i) {
             this.grid[i] = new Array(this.options.height);
-            this.grid[i].fill(Air);
+            this.replacementGrid[i] = new Array(this.options.height);
+            this.grid[i].fill(ElementType.AIR);
+            this.replacementGrid[i].fill(ElementType.AIR);
         }
     }
 
-    public getElementAt(x: number, y: number): Element | null {
+    public getElementAt(x: number, y: number): ElementType | null {
         if(x < 0 || x >= this.options.width ||
            y < 0 || y >= this.options.height) {
             // console.error(`${x}-${y} is out of grid bound`);
@@ -29,7 +33,7 @@ export class Grid {
         return this.grid[x][y];
     }
 
-    public setElementAt(x: number, y: number, value: Element): void {
+    public setElementAt(x: number, y: number, value: ElementType): void {
         if(x < 0 || x >= this.options.width ||
            y < 0 || y >= this.options.height) {
             // console.error(`${x}-${y} is out of grid bound`);
@@ -41,6 +45,15 @@ export class Grid {
 
     public getDimentions(): [number, number] {
         return [this.grid.length, this.grid[0].length];
+    }
+
+
+    public updateGrid(): void {
+        for(let i=0;i<this.options.width;++i)
+        for(let j=0;j<this.options.height;++j) {
+            this.grid[i][j] = this.replacementGrid[i][j];
+            this.replacementGrid[i][j] = ElementType.AIR;
+        }
     }
     
 }

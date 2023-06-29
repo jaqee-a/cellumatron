@@ -1,4 +1,4 @@
-import { Sand } from "../element";
+import { ElementType } from "../element";
 import { Game } from "../game";
 import { Grid } from "../grid";
 import { MouseInput } from "../mouseinput";
@@ -35,7 +35,7 @@ export class Brush extends Tool {
         for(let i=-middle;i<middle+1;++i)
         for(let j=-middle;j<middle+1;++j)
         {
-            grid.setElementAt(x+i, y+j, Sand);
+            grid.setElementAt(x+i, y+j, ElementType.SAND);
         }
         // Dynamic
     }
