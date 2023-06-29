@@ -4,16 +4,16 @@ import { ElementManager } from "./components/ElementManager";
 
 function App() {
     return (
-        <AppCOntainer>
+        <AppContainer>
             <Canvas width={1000} height={1000}/>
             <ElementManager />
-        </AppCOntainer>
+        </AppContainer>
     );
 }
 
 
 
-const AppCOntainer = styled.div`
+const AppContainer = styled.div`
     display: flex;
 `;
 
