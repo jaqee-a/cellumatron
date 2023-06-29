@@ -17,7 +17,7 @@ export class Brush extends Tool {
 
     public static instance: Tool = new Brush();
 
-    private options: BrushOptions = {size: 5, selectedElement: ElementType.SAND};
+    private options: BrushOptions = {size: 5, selectedElement: ElementType.CUSTOM};
 
     public setOptions(options: BrushOptions) {
         this.options = options;

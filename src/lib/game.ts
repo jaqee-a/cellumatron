@@ -1,4 +1,4 @@
-import { ElementType, Element, getElementFromType } from "./element";
+import { Element, getElementById } from "./element";
 import { Grid } from "./grid";
 import { KeyboardInput } from "./keyboardinput";
 import { Tool } from "./tools";
@@ -33,11 +33,11 @@ export class Game {
     update(_: number): void {
 
         if(KeyboardInput.isDown('s')) {
-            this.selectedTool.setOption('selectedElement', ElementType.SAND);
+            // this.selectedTool.setOption('selectedElement', ElementType.SAND);
         }
 
         if(KeyboardInput.isDown('w')) {
-            this.selectedTool.setOption('selectedElement', ElementType.WATER);
+            // this.selectedTool.setOption('selectedElement', ElementType.WATER);
         }
 
         // ADD NEW ELEMENTS
@@ -48,9 +48,9 @@ export class Game {
         for(let i=0;i<this.options.width    ;++i)
         // for(let j=0;j<this.options.height;++j) {
         for(let j=this.options.height-1;j>=0;--j) {
-            const currentElementType: ElementType | null = this.dataGrid.getElementAt(i, j);
-            if(currentElementType === null || currentElementType === ElementType.AIR) continue;
-            const element: Element = getElementFromType(currentElementType);
+            const currentElementType: number | null = this.dataGrid.getElementAt(i, j);
+            if(currentElementType === null || currentElementType === 0) continue;
+            const element: Element = getElementById(currentElementType);
             
             this.checkElementRulesAndUpdate(i, j, element);
         }

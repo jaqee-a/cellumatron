@@ -3,13 +3,13 @@ import { Color } from "./color";
 interface Rule {
     offsetX: number;
     offsetY: number;
-    expect: ElementType;
+    expect: number; // ID
 };
 
 interface RuleAction {
     updateOffsetX: number;
     updateOffsetY: number;
-    updateWith: ElementType;
+    updateWith: number; // ID
 }
 interface RuleCluster {
     rules: Array<Rule>;
@@ -17,67 +17,22 @@ interface RuleCluster {
 } 
 
 export interface Element {
+    id?: number;
+    name: string;
     color: Color;
     ruleClusters: Array<RuleCluster>;
 };
 
 
 export enum ElementType {
-    SAND,
-    WATER,
-    AIR
+    AIR,
+    CUSTOM,
+    ANY
 }
 
-
-const Water: Element = {
-    color: Color.fromRGB(36, 70, 204),
-    ruleClusters: [
-        {
-            rules: [
-                {
-                    offsetX: 0,
-                    offsetY: 1,
-                    expect: ElementType.AIR
-                }
-            ],
-            actions: [
-                {
-                    updateOffsetX: 0,
-                    updateOffsetY: 1,
-                    updateWith: ElementType.WATER
-                },
-                {
-                    updateOffsetX: 0,
-                    updateOffsetY: 0,
-                    updateWith: ElementType.AIR
-                }
-            ]
-        },
-        {
-            rules: [
-                {
-                    offsetX: 0,
-                    offsetY: 1,
-                    expect: ElementType.SAND
-                }
-            ],
-            actions: [
-                {
-                    updateOffsetX: 0,
-                    updateOffsetY: 1,
-                    updateWith: ElementType.WATER
-                },
-                {
-                    updateOffsetX: 0,
-                    updateOffsetY: 0,
-                    updateWith: ElementType.SAND
-                }
-            ]
-        }
-    ]
-}
 
 const Sand: Element = {
+    name: "Sand",
     color: Color.fromRGB(218, 224, 38),
     ruleClusters: [
         {
@@ -92,12 +47,12 @@ const Sand: Element = {
                 {
                     updateOffsetX: 0,
                     updateOffsetY: 1,
-                    updateWith: ElementType.SAND
+                    updateWith: 1
                 },
                 {
                     updateOffsetX: 0,
                     updateOffsetY: 0,
-                    updateWith: ElementType.AIR
+                    updateWith: 0
                 }
             ]
         },
@@ -106,19 +61,19 @@ const Sand: Element = {
                 {
                     offsetX: 1,
                     offsetY: 1,
-                    expect: ElementType.AIR,
+                    expect: 0,
                 }
             ],
             actions: [
                 {
                     updateOffsetX: 1,
                     updateOffsetY: 1,
-                    updateWith: ElementType.SAND
+                    updateWith: 1
                 },
                 {
                     updateOffsetX: 0,
                     updateOffsetY: 0,
-                    updateWith: ElementType.AIR
+                    updateWith: 0
                 }
             ]
         },
@@ -127,19 +82,19 @@ const Sand: Element = {
                 {
                     offsetX: -1,
                     offsetY: 1,
-                    expect: ElementType.AIR,
+                    expect: 0
                 }
             ],
             actions: [
                 {
                     updateOffsetX: -1,
                     updateOffsetY: 1,
-                    updateWith: ElementType.SAND
+                    updateWith: 1
                 },
                 {
                     updateOffsetX: 0,
                     updateOffsetY: 0,
-                    updateWith: ElementType.AIR
+                    updateWith: 0
                 }
             ]
         }
@@ -147,16 +102,25 @@ const Sand: Element = {
 };
 
 const Air: Element = {
+    name: "Air",
     color: Color.fromRGB(255, 255, 255),
     ruleClusters: []
 };
 
 
 
-export function getElementFromType(type: ElementType): Element {
-    switch(type) {
-        case ElementType.SAND:return Sand;
-        case ElementType.WATER:return Water;
-        case ElementType.AIR:return Air
-    }
+const CUSTOM_ELEMENTS: Array<Element> = new Array<Element>();
+
+export function registerNewElement(element: Element): void {
+    element.id = CUSTOM_ELEMENTS.length;
+    CUSTOM_ELEMENTS.push(element);
 }
+
+export function getElementById(id: number): Element {
+    return CUSTOM_ELEMENTS[id];
+}
+
+
+// Register default elements
+registerNewElement(Air);
+registerNewElement(Sand);
