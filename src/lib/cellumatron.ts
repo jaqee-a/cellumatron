@@ -1,13 +1,12 @@
-import { Grid } from "./grid";
 import { GridRenderer } from "./gridrenderer";
 import { Context2DRenderer } from "./context2drenderer";
-// import { Sand } from "./element";
 import { CustomEventHandler } from "./eventhandler";
+import { Game } from "./game";
+import { KeyboardInput } from "./keyboardinput";
+import { MouseInput } from "./mouseinput";
 
 
-
-
-
+// Game Manager
 export class Cellumatron {
 
     startTime: number = 0;
@@ -17,12 +16,12 @@ export class Cellumatron {
     canvasEventHandler: CustomEventHandler;
 
     
-    dataGrid: Grid;
     gridRenderer: GridRenderer;
+    game: Game;
 
 
     // Game options
-    cellSize: number = 1;
+    cellSize: number = 10;
     avgFPS: number = -1;
 
 
@@ -35,43 +34,39 @@ export class Cellumatron {
         dimentions.width  /= this.cellSize;
         dimentions.height /= this.cellSize;
 
-        this.dataGrid = new Grid(dimentions);
-        this.gridRenderer = new GridRenderer(this.dataGrid, this.cellSize);
-        this.renderer.clear("black");
+        this.game = new Game(dimentions);
 
+        this.gridRenderer = new GridRenderer(this.game.getGrid(), this.cellSize);
 
-
-        // TEST
-        // for(let i = 0; i < dimentions.width; ++i)
-        // for(let j = 0; j < dimentions.height; ++j)
-        // {
-        //     if(Math.round(Math.random()))
-        //     this.dataGrid.setElementAt(i, j, Sand);
-        // }
-        //-----
-        //
         this.createEventHandlers(this.renderer.getContext().canvas);
 
-        requestAnimationFrame((dt)=>this.render(dt));
+        requestAnimationFrame((dt)=>this.loop(dt));
     }
 
 
-    createEventHandlers(canvas: HTMLElement) {
+    createEventHandlers(canvas: HTMLCanvasElement) {
         let {top, left} = canvas.getClientRects().item(0)!;
+
         top  = Math.floor(top);
         left = Math.floor(left);
         
-        this.canvasEventHandler.on("mousemove", (x: number, y: number): void =>{});
-        this.canvasEventHandler.on("mousedown", (x: number, y: number): void =>{});
-        this.canvasEventHandler.on("keydown"  , (key: string): void =>{});
+        this.canvasEventHandler.on("mousemove", this.onMouseMoveHandler);
+        this.canvasEventHandler.on("mousedown", this.onMouseDownHandler);
+        this.canvasEventHandler.on("mouseup"  , this.onMouseUpHandler  );
+        this.canvasEventHandler.on("keydown"  , this.onKeyDownHandler  );
 
         document.addEventListener("keydown", (e) => {
             this.canvasEventHandler.emit("keydown", e.key);
         });
 
+        canvas.addEventListener("mouseup", (e: MouseEvent) => {
+            const {clientX, clientY} = e;
+            this.canvasEventHandler.emit("mouseup", clientX - left , clientY - top, e.button);
+        });
+
         canvas.addEventListener("mousedown", (e: MouseEvent) => {
             const {clientX, clientY} = e;
-            this.canvasEventHandler.emit("mousedown", clientX - left , clientY - top);
+            this.canvasEventHandler.emit("mousedown", clientX - left , clientY - top, e.button);
         });
 
         canvas.addEventListener("mousemove", (e: MouseEvent) => {
@@ -80,10 +75,24 @@ export class Cellumatron {
         })
     }
 
+    onMouseUpHandler(x: number, y: number, button: number): void {
+        MouseInput.setButton(button as (0 | 1 | 2), false);
+    }
 
+    onMouseMoveHandler(x: number, y: number): void {
+        MouseInput.setPosition(Math.floor(x / 10), Math.floor(y / 10));
+    }
+
+    onMouseDownHandler(x: number, y: number, button: number): void {
+        MouseInput.setButton(button as (0 | 1 | 2), true);
+    }
+
+    onKeyDownHandler(key: string): void {
+        KeyboardInput.setCode(key);
+    }
 
     // Game Loop
-    public render(timestamp: number): void {
+    public loop(timestamp: number): void {
         this.deltaTime = timestamp - this.startTime;
         this.startTime = timestamp;
 
@@ -91,12 +100,19 @@ export class Cellumatron {
 
         if(this.avgFPS===-1)this.avgFPS=fps;
         else this.avgFPS = (this.avgFPS+fps)/2;
-        // console.log(this.avgFPS.toFixed(0));
+
+        // console.log(this.avgFPS);
         
-        //
-        // this.gridRenderer.renderGrid(this.renderer);
+        // Tick
+            // Read input
+            // Update
+        this.game.update(this.deltaTime);
+            // Render
+        this.gridRenderer.renderGrid(this.renderer);
+            // Clear input
+        KeyboardInput.clearInput();
+        // MouseInput.clearInput();
         
-        
-        requestAnimationFrame((dt)=>this.render(dt));
+        requestAnimationFrame((dt)=>this.loop(dt));
     }
 }

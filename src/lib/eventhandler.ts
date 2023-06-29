@@ -8,18 +8,22 @@ interface IEventHandler {
 
 type MouseMove  = "mousemove";
 type MouseDown  = "mousedown"; 
+type MouseUp    = "mouseup"; 
 type KeyDown    = "keydown";
 
-type MouseEvent    = MouseMove | MouseDown;
-type KeyboardEvent = KeyDown;
+type MouseButtonEvent = MouseDown | MouseUp;
+type MouseEvent       = MouseMove | MouseButtonEvent; 
+type KeyboardEvent    = KeyDown;
 
 type EventHandle = MouseEvent | KeyboardEvent;
 
-type MouseCallback    = (x: number, y: number) => void;
-type KeyboardCallback = (key: string) => void;
+type MouseCallback       = (x: number, y: number) => void;
+type MouseButtonCallback = (x: number, y: number, button: number) => void;
+type KeyboardCallback    = (key: string) => void;
 
-type Callback<T> = T extends MouseEvent    ? MouseCallback    :
-                   T extends KeyboardEvent ? KeyboardCallback :
+type Callback<T> = T extends MouseMove        ? MouseCallback       :
+                   T extends MouseButtonEvent ? MouseButtonCallback :
+                   T extends KeyboardEvent    ? KeyboardCallback    :
                    never;
 
 export class CustomEventHandler implements IEventHandler {
