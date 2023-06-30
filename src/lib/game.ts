@@ -30,10 +30,6 @@ export class Game {
 
 
     update(_: number): void {
-        // ADD NEW ELEMENTS
-        this.selectedTool.use();
-
-        
         // UPDATE ELEMENTS
         // for(let i=this.options.width-1;i>=0;--i)
         // for(let j=0;j<this.options.height;++j) {
@@ -46,6 +42,9 @@ export class Game {
             this.checkElementRulesAndUpdate(i, j, element);
         }
 
+        // ADD NEW ELEMENTS
+        this.selectedTool.use();
+
         this.dataGrid.updateGrid();        
     }
 
@@ -53,10 +52,7 @@ export class Game {
     checkElementRulesAndUpdate(x: number, y: number, element: Element): void {
         for(const ruleCluster of element.ruleClusters) {
             const clusterCheck: boolean = ruleCluster.rules.every((value) => {
-                const newX = value.offsetX + x;
-                const newY = value.offsetY + y;
-
-                return this.dataGrid.getElementAt(newX, newY) === value.expect;
+                return this.dataGrid.getElementAtByOffset(x, y, value.offsetX, value.offsetY) === value.expect;
             });
 
             if(clusterCheck) {

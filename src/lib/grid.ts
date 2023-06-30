@@ -28,6 +28,21 @@ export class Grid {
         return this.grid[x][y];
     }
 
+    public getElementAtByOffset(x: number, y: number, ox: number, oy: number): number | null {
+        const newX = x+ox;
+        const newY = y+oy;
+        if(newX < 0 || newX >= this.options.width ||
+           newY < 0 || newY >= this.options.height) {
+            // console.error(`${x}-${y} is out of grid bound`);
+            return null;
+        }
+
+        const comparatorGrid: number[][] =
+            (newY > y) || (newY === y && newX < x) ? this.replacementGrid : this.grid;
+
+        return comparatorGrid[newX][newY];
+    }
+
     public setElementAt(x: number, y: number, value: number): void {
         if(x < 0 || x >= this.options.width ||
            y < 0 || y >= this.options.height) {

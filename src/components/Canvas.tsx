@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Context2DRenderer } from "../lib/context2drenderer";
 import { Cellumatron } from "../lib/cellumatron";
+import { styled } from "styled-components";
 
 
 interface CanvasProps {
@@ -24,6 +25,13 @@ export function Canvas({width, height}: CanvasProps) {
     });
     
     return (
-        <canvas ref={canvas} width={width} height={height} />
+        <CanvasElement ref={canvas} width={width} height={height} />
+        // <canvas ref={canvas} width={width} height={height} />
     )
 }
+
+
+const CanvasElement = styled.canvas`
+    width: ${(props)=>props.width}px;
+    height: ${(props)=>props.height}px;
+`;

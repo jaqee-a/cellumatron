@@ -91,6 +91,8 @@ export class Cellumatron {
         KeyboardInput.setCode(key);
     }
 
+    // private v=0;
+
     // Game Loop
     public loop(timestamp: number): void {
         this.deltaTime = timestamp - this.startTime;
@@ -101,6 +103,13 @@ export class Cellumatron {
         if(this.avgFPS===-1)this.avgFPS=fps;
         else this.avgFPS = (this.avgFPS+fps)/2;
 
+        // if((++this.v)%10!==0){
+        //             requestAnimationFrame((dt)=>this.loop(dt));
+
+        //     return;
+
+        // }
+        // this.v=0;
         // console.log(this.avgFPS);
         
         // Tick
