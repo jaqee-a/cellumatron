@@ -1,6 +1,5 @@
 import { Element, getElementById } from "./element";
 import { Grid } from "./grid";
-import { KeyboardInput } from "./keyboardinput";
 import { Tool } from "./tools";
 import { Brush } from "./tools/brush";
 
@@ -31,22 +30,14 @@ export class Game {
 
 
     update(_: number): void {
-
-        if(KeyboardInput.isDown('s')) {
-            // this.selectedTool.setOption('selectedElement', ElementType.SAND);
-        }
-
-        if(KeyboardInput.isDown('w')) {
-            // this.selectedTool.setOption('selectedElement', ElementType.WATER);
-        }
-
         // ADD NEW ELEMENTS
         this.selectedTool.use();
 
         
         // UPDATE ELEMENTS
-        for(let i=0;i<this.options.width    ;++i)
+        // for(let i=this.options.width-1;i>=0;--i)
         // for(let j=0;j<this.options.height;++j) {
+        for(let i=0;i<this.options.width    ;++i)
         for(let j=this.options.height-1;j>=0;--j) {
             const currentElementType: number | null = this.dataGrid.getElementAt(i, j);
             if(currentElementType === null || currentElementType === 0) continue;
@@ -55,7 +46,7 @@ export class Game {
             this.checkElementRulesAndUpdate(i, j, element);
         }
 
-        // this.dataGrid.updateGrid();        
+        this.dataGrid.updateGrid();        
     }
 
 
@@ -79,7 +70,13 @@ export class Game {
 
                 return;
             }
-
         }
+
+        this.dataGrid.setElementAt(x, y, element.id);
     }
 }
+
+// W W A A A A
+// W W A A A A
+
+

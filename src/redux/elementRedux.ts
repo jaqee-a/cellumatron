@@ -13,7 +13,6 @@ const elementRedux = createSlice({
     reducers: {
         addNewElement: (state, _) => {
             createNewElement();
-            // @ts-ignore
             state.elements = getAllElementsForRedux();
         },
         updateElements: (state, action) => {
@@ -26,13 +25,11 @@ const elementRedux = createSlice({
                 }
             );
 
-            // @ts-ignore
             state.elements = getAllElementsForRedux();
             
         },
         overrideAllElements: (state, action) => {
             loadAllElements(action.payload);
-            // @ts-ignore
             state.elements = getAllElementsForRedux();
         },
         setSelectedElement: (state, action) => {

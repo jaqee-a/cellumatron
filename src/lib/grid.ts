@@ -6,16 +6,16 @@ interface GridOptions {
 export class Grid {
 
     private grid: number[][];
-    // private replacementGrid: number[][];
+    private replacementGrid: number[][];
 
     constructor(private options: GridOptions) {
         this.grid = new Array<number[]>(this.options.width);
-        // this.replacementGrid = new Array<number[]>(this.options.width);
+        this.replacementGrid = new Array<number[]>(this.options.width);
         for(let i=0;i<this.options.width;++i) {
             this.grid[i] = new Array(this.options.height);
-            // this.replacementGrid[i] = new Array(this.options.height);
+            this.replacementGrid[i] = new Array(this.options.height);
             this.grid[i].fill(0);
-            // this.replacementGrid[i].fill(0);
+            this.replacementGrid[i].fill(0);
         }
     }
 
@@ -34,7 +34,7 @@ export class Grid {
             // console.error(`${x}-${y} is out of grid bound`);
             return;
         }
-        this.grid[x][y] = value;
+        this.replacementGrid[x][y] = value;
     }
 
 
@@ -43,12 +43,11 @@ export class Grid {
     }
 
 
-    // public updateGrid(): void {
-    //     for(let i=0;i<this.options.width;++i)
-    //     for(let j=0;j<this.options.height;++j) {
-    //         this.grid[i][j] = this.replacementGrid[i][j];
-    //         this.replacementGrid[i][j] = ElementType.AIR;
-    //     }
-    // }
+    public updateGrid(): void {
+        for(let i=0;i<this.options.width;++i)
+        for(let j=0;j<this.options.height;++j) {
+            this.grid[i][j] = this.replacementGrid[i][j];
+        }
+    }
     
 }

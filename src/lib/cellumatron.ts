@@ -50,10 +50,10 @@ export class Cellumatron {
         top  = Math.floor(top);
         left = Math.floor(left);
         
-        this.canvasEventHandler.on("mousemove", (...args)=>{this.onMouseMoveHandler(...args)});
-        this.canvasEventHandler.on("mousedown", (...args)=>{this.onMouseDownHandler(...args)});
-        this.canvasEventHandler.on("mouseup"  , (...args)=>{this.onMouseUpHandler(...args)  });
-        this.canvasEventHandler.on("keydown"  , (...args)=>{this.onKeyDownHandler(...args)  });
+        this.canvasEventHandler.on("mousemove", (x: number, y: number)                =>{this.onMouseMoveHandler(x, y)        });
+        this.canvasEventHandler.on("mousedown", (x: number, y: number, button: number)=>{this.onMouseDownHandler(x, y, button)});
+        this.canvasEventHandler.on("mouseup"  , (x: number, y: number, button: number)=>{this.onMouseUpHandler(x, y, button)  });
+        this.canvasEventHandler.on("keydown"  , (key: string)                         =>{this.onKeyDownHandler(key)           });
 
         document.addEventListener("keydown", (e) => {
             this.canvasEventHandler.emit("keydown", e.key);
