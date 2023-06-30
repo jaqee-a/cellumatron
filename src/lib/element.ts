@@ -23,14 +23,6 @@ export interface Element {
     ruleClusters: Array<RuleCluster>;
 };
 
-
-export enum ElementType {
-    AIR,
-    CUSTOM,
-    ANY
-}
-
-
 const Sand: Element = {
     id: 1,
     name: "Sand",
@@ -41,7 +33,7 @@ const Sand: Element = {
                 {
                     offsetX: 0,
                     offsetY: 1,
-                    expect: ElementType.AIR,
+                    expect: 0,
                 }
             ],
             actions: [

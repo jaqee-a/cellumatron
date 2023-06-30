@@ -1,4 +1,3 @@
-import { ElementType } from "../element";
 import { Game } from "../game";
 import { Grid } from "../grid";
 import { MouseInput } from "../mouseinput";
@@ -8,7 +7,7 @@ import { Tool } from "../tools";
 
 interface BrushOptions {
     size: number;
-    selectedElement: ElementType;
+    selectedElement: number;
 };
 
 
@@ -17,7 +16,7 @@ export class Brush extends Tool {
 
     public static instance: Tool = new Brush();
 
-    private options: BrushOptions = {size: 5, selectedElement: ElementType.CUSTOM};
+    private options: BrushOptions = {size: 5, selectedElement: 0};
 
     public getOption(key: string) {
         // @ts-ignore
