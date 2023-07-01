@@ -13,13 +13,13 @@ export function RuleCluster({index, clusters, setRuleClusters}: RuleClusterProps
 
     const handleAddNewRule = () => {
         const newClusters = structuredClone(clusters);
-        newClusters[index].rules.push({ offsetX: 0, offsetY: 0, expect: 0 });
+        newClusters[index].rules.push({ offsetX: 0, offsetY: 0, element: 0 });
         setRuleClusters(newClusters);
     }
 
     const handleAddNewAction = () => {
         const newClusters = structuredClone(clusters);
-        newClusters[index].actions.push({ updateOffsetX: 0, updateOffsetY: 0, updateWith: 0 });
+        newClusters[index].actions.push({ offsetX: 0, offsetY: 0, element: 0 });
         setRuleClusters(newClusters);
     }
 

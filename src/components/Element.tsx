@@ -5,6 +5,8 @@ import { RuleCluster as RuleClusterStructure, getElementById } from "../lib/elem
 import { useDispatch, useSelector } from "react-redux";
 import { updateElements } from "../redux/elementRedux";
 import { CellumatronState } from "../redux/store";
+import { Input } from "./Input";
+import { Collapsable } from "./Collapsable";
 
 export function Element() {
     const [name, setName] = useState<string>('New Element');
@@ -48,16 +50,18 @@ export function Element() {
             <ElementContainer>
                 <MetaInput>
                     <label>Name</label>
-                    <input type="text" value={name} onChange={handleNameChange}/>
+                    <Input type="text" value={name} onChange={handleNameChange}/>
                     <label>Color</label>
-                    <input type="color" value={color} onChange={handleColorChange}/> 
+                    <Input type="color" value={color} onChange={handleColorChange}/> 
                 </MetaInput>
-                <RulesContainer>
-                    {
-                        ruleClusters.map((_, index) => 
-                                <RuleCluster index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} /> )
-                    }
-                </RulesContainer>
+                <Collapsable title="Rules" defaultState="collapsed">
+                    <RulesContainer>
+                        {
+                            ruleClusters.map((_, index) => 
+                                    <RuleCluster index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} /> )
+                        }
+                    </RulesContainer>
+                </Collapsable>
                 <button onClick={handleAddNewCluster}>Add new Cluster</button>
                 <button onClick={handleSave}>Save</button>
             </ElementContainer>

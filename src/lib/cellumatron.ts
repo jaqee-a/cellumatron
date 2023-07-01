@@ -115,6 +115,7 @@ export class Cellumatron {
         // Tick
             // Read input
             // Update
+        for(let i=0;i<5;++i)
         this.game.update(this.deltaTime);
             // Render
         this.gridRenderer.renderGrid(this.renderer);

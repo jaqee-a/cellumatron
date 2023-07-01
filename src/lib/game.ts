@@ -52,16 +52,16 @@ export class Game {
     checkElementRulesAndUpdate(x: number, y: number, element: Element): void {
         for(const ruleCluster of element.ruleClusters) {
             const clusterCheck: boolean = ruleCluster.rules.every((value) => {
-                return this.dataGrid.getElementAtByOffset(x, y, value.offsetX, value.offsetY) === value.expect;
+                return this.dataGrid.getElementAtByOffset(x, y, value.offsetX, value.offsetY) === value.element;
             });
 
             if(clusterCheck) {
                 
                 for(const action of ruleCluster.actions) {
-                    const newX = action.updateOffsetX + x;
-                    const newY = action.updateOffsetY + y;
+                    const newX = action.offsetX + x;
+                    const newY = action.offsetY + y;
 
-                    this.dataGrid.setElementAt(newX, newY, action.updateWith);
+                    this.dataGrid.setElementAt(newX, newY, action.element);
                 }
 
                 return;

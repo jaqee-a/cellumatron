@@ -1,18 +1,13 @@
 import { Color } from "./color";
 
-export interface Rule {
+export interface RuleAction {
     offsetX: number;
     offsetY: number;
-    expect: number; // ID
+    element: number; // ID
 };
 
-export interface RuleAction {
-    updateOffsetX: number;
-    updateOffsetY: number;
-    updateWith: number; // ID
-}
 export interface RuleCluster {
-    rules: Array<Rule>;
+    rules: Array<RuleAction>;
     actions: Array<RuleAction>;
 } 
 
@@ -33,19 +28,19 @@ const Sand: Element = {
                 {
                     offsetX: 0,
                     offsetY: 1,
-                    expect: 0,
+                    element: 0,
                 }
             ],
             actions: [
                 {
-                    updateOffsetX: 0,
-                    updateOffsetY: 1,
-                    updateWith: 1
+                    offsetX: 0,
+                    offsetY: 1,
+                    element: 1
                 },
                 {
-                    updateOffsetX: 0,
-                    updateOffsetY: 0,
-                    updateWith: 0
+                    offsetX: 0,
+                    offsetY: 0,
+                    element: 0
                 }
             ]
         },
@@ -54,19 +49,19 @@ const Sand: Element = {
                 {
                     offsetX: 1,
                     offsetY: 1,
-                    expect: 0,
+                    element: 0,
                 }
             ],
             actions: [
                 {
-                    updateOffsetX: 1,
-                    updateOffsetY: 1,
-                    updateWith: 1
+                    offsetX: 1,
+                    offsetY: 1,
+                    element: 1
                 },
                 {
-                    updateOffsetX: 0,
-                    updateOffsetY: 0,
-                    updateWith: 0
+                    offsetX: 0,
+                    offsetY: 0,
+                    element: 0
                 }
             ]
         },
@@ -75,19 +70,19 @@ const Sand: Element = {
                 {
                     offsetX: -1,
                     offsetY: 1,
-                    expect: 0
+                    element: 0
                 }
             ],
             actions: [
                 {
-                    updateOffsetX: -1,
-                    updateOffsetY: 1,
-                    updateWith: 1
+                    offsetX: -1,
+                    offsetY: 1,
+                    element: 1
                 },
                 {
-                    updateOffsetX: 0,
-                    updateOffsetY: 0,
-                    updateWith: 0
+                    offsetX: 0,
+                    offsetY: 0,
+                    element: 0
                 }
             ]
         }

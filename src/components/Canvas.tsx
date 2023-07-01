@@ -26,7 +26,6 @@ export function Canvas({width, height}: CanvasProps) {
     
     return (
         <CanvasElement ref={canvas} width={width} height={height} />
-        // <canvas ref={canvas} width={width} height={height} />
     )
 }
 
