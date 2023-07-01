@@ -1,10 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createNewElement, loadAllElements, getAllElementsForRedux, updateElement } from "../lib/element";
+import { PayloadAction, SliceCaseReducers, createSlice } from "@reduxjs/toolkit";
+import { createNewElement, loadAllElements, getAllElementsForRedux, updateElement, RuleCluster } from "../lib/element";
 import { Color } from "../lib/color";
 import { Brush } from "../lib/tools/brush";
 
 
-const elementRedux = createSlice({
+export interface ElementReduxInitialState {
+    elements: Array<any>;
+    selectedElement: number;
+};
+
+interface UpdateElementPayloadAction {
+    id: number;
+    name: string;
+    color: string;
+    ruleClusters: Array<RuleCluster>;
+};
+
+const elementRedux = createSlice<ElementReduxInitialState, SliceCaseReducers<ElementReduxInitialState>>({
     name: "elements",
     initialState: {
         elements: getAllElementsForRedux(),
@@ -15,7 +27,7 @@ const elementRedux = createSlice({
             createNewElement();
             state.elements = getAllElementsForRedux();
         },
-        updateElements: (state, action) => {
+        updateElements: (state, action: PayloadAction<UpdateElementPayloadAction>) => {
             updateElement(
                 {
                     id: action.payload.id,

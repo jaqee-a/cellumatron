@@ -4,6 +4,7 @@ import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { RuleCluster as RuleClusterStructure, getElementById } from "../lib/element";
 import { useDispatch, useSelector } from "react-redux";
 import { updateElements } from "../redux/elementRedux";
+import { CellumatronState } from "../redux/store";
 
 export function Element() {
     const [name, setName] = useState<string>('New Element');
@@ -12,8 +13,7 @@ export function Element() {
     const [ruleClusters, setRuleClusters] = useState<RuleClusterStructure[]>([]);
 
     const dispatch = useDispatch();
-    const selectedID = useSelector(state=> {
-        // @ts-ignore
+    const selectedID = useSelector((state: CellumatronState)=> {
         return state.elements.selectedElement;
     });
 

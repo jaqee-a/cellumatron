@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import elementRedux from "./elementRedux";
+import elementRedux, { ElementReduxInitialState } from "./elementRedux";
 
+export interface CellumatronState {
+    elements: ElementReduxInitialState;
+};
 
-export const store = configureStore({
+export const store = configureStore<CellumatronState>({
     reducer: {
         elements: elementRedux
     }

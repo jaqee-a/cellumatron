@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Element } from "../lib/element";
 import { setSelectedElement, addNewElement} from "../redux/elementRedux";
+import { CellumatronState } from "../redux/store";
 
 
 
 export function ElementPicker() {
-    const allElements: Array<Element> = useSelector((state: any) => state.elements.elements);
+    const allElements: Array<Element> = useSelector((state: CellumatronState) => state.elements.elements);
     const dispatch = useDispatch();
 
     const handleClickOnElement = (value: any) => {
