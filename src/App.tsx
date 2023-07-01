@@ -31,10 +31,12 @@ function App() {
     return (
         <div>
             <AppContainer>
-                <Canvas width={1000} height={1000}/>
+                <div>
+                    <Canvas width={1000} height={1000}/>
+                    <ElementPicker />
+                </div>
                 <ElementManager />
             </AppContainer>
-            <ElementPicker />
             <button onClick={handleLocalStorageSave}>Save to local storage</button>
             <button onClick={handleLocalStorageLoad}>Load from local storage</button>
         </div>
