@@ -16,11 +16,12 @@ interface RuleActionBuilderProps {
     onChange: Function;
 };
 
+
 export function RuleActionBuilder({elementId, actionRules, onChange}: RuleActionBuilderProps) {
     const size: number = 1;
-    const [neighbours, setNeighbours] = useState<NeighbourDict>({});
-
     const elementsCount = useSelector((state: CellumatronState)=>state.elements.elements).length;
+
+    const [neighbours, setNeighbours] = useState<NeighbourDict>({});
 
     useEffect(()=>{
         const newNeighbours: NeighbourDict = {};
@@ -38,8 +39,8 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
         }
         
         setNeighbours(newNeighbours);
-    }, []);
-
+    }, [actionRules]);
+    
     const get2dIndices = (index: number): [number, number] => {
         const width: number = size*2+1;
         return [index%width - size, (index/width << 0) - size];
@@ -64,7 +65,15 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
         setNeighbours(newNeighbours);
 
         // Fire event
-        onChange(Object.values(neighbours).filter((actionRule: RuleAction) => actionRule.element !== elementsCount));
+        const ruleActions: Array<RuleAction> = 
+                Object.values(neighbours).filter((actionRule: RuleAction) => {
+                    const isRule: boolean = elementId !== undefined;
+                    const reject: boolean = actionRule.element === elementsCount || (isRule && 
+                                                                                     actionRule.offsetX === 0 && 
+                                                                                     actionRule.offsetY === 0);
+                    return !reject;
+                });
+        onChange(ruleActions);
     }
     return (<div>
                 <GridContainer>

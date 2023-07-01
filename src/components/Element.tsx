@@ -46,6 +46,11 @@ export function Element() {
         dispatch(updateElements({ id, name, color, ruleClusters }));
     }
 
+    const handleDeleteRuleAction = (index: number) => {
+        const newClusters = ruleClusters.filter((_, idx: number) => idx!==index);
+        setRuleClusters(newClusters);
+    }
+
     return (
             <ElementContainer>
                 <MetaInput>
@@ -58,7 +63,10 @@ export function Element() {
                     <RulesContainer>
                         {
                             ruleClusters.map((_, index) => 
-                                    <RuleCluster elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} /> )
+                                    <div>
+                                        <button onClick={()=>{handleDeleteRuleAction(index)}}>Delete</button>
+                                        <RuleCluster elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} />
+                                    </div>)
                         }
                     </RulesContainer>
                 </Collapsable>

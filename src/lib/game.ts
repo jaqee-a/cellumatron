@@ -62,7 +62,7 @@ export class Game {
                     return this.dataGrid.getElementAtByOffset(x, y, action.offsetX, action.offsetY) !== null;
                 });
 
-                if(!canRunActions) break;
+                if(!canRunActions) continue;
                 
                 for(const action of ruleCluster.actions) {
                     const newX = action.offsetX + x;
@@ -75,7 +75,7 @@ export class Game {
             }
         }
 
-        this.dataGrid.setElementAt(x, y, element.id);
+        // this.dataGrid.setElementAt(x, y, element.id);
     }
 }
 

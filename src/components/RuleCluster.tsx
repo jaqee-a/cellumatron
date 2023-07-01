@@ -27,15 +27,18 @@ export function RuleCluster({elementId, index, clusters, setRuleClusters}: RuleC
         <ClusterContainer>
             <RulesContainer>
                 <RuleActionBuilder elementId={elementId} actionRules={clusters[index].rules} onChange={handleRulesUpdate}/>
-            </RulesContainer><br/>
+            </RulesContainer>
             <ActionsContainer>
                 <RuleActionBuilder actionRules={clusters[index].actions} onChange={handleActionsUpdate}/>
-            </ActionsContainer><br/>
+            </ActionsContainer>
         </ClusterContainer>
     );
 }
 
-const ClusterContainer = styled.div``;
+const ClusterContainer = styled.div`
+    display: flex;
+    gap: 1rem;
+`;
 
 const RulesContainer   = styled.div``;
 const ActionsContainer = styled.div``;
