@@ -1,38 +1,36 @@
 import { styled } from "styled-components";
-import { RuleCluster as RuleClusterStructure } from "../lib/element";
-import { Rule } from "./Rule";
-import { Action } from "./Action";
+import { RuleAction, RuleCluster as RuleClusterStructure } from "../lib/element";
+import { RuleActionBuilder } from "./RuleActionBuilder";
 
 interface RuleClusterProps {
     index: number;
+    elementId: number;
     clusters: Array<RuleClusterStructure>;
     setRuleClusters: Function;
 };
 
-export function RuleCluster({index, clusters, setRuleClusters}: RuleClusterProps) {
+export function RuleCluster({elementId, index, clusters, setRuleClusters}: RuleClusterProps) {
 
-    const handleAddNewRule = () => {
+    const handleRulesUpdate = (rules: Array<RuleAction>) => {
         const newClusters = structuredClone(clusters);
-        newClusters[index].rules.push({ offsetX: 0, offsetY: 0, element: 0 });
-        setRuleClusters(newClusters);
+        newClusters[index].rules = rules;
+        setRuleClusters(newClusters)
     }
 
-    const handleAddNewAction = () => {
+    const handleActionsUpdate = (actions: Array<RuleAction>) => {
         const newClusters = structuredClone(clusters);
-        newClusters[index].actions.push({ offsetX: 0, offsetY: 0, element: 0 });
-        setRuleClusters(newClusters);
+        newClusters[index].actions = actions;
+        setRuleClusters(newClusters)
     }
 
     return (
         <ClusterContainer>
             <RulesContainer>
-                { clusters[index].rules.map((_, ruleIndex) => <Rule clusters={clusters} clusterIndex={index} ruleIndex={ruleIndex} setRuleClusters={setRuleClusters}/>) }
-            </RulesContainer>
-            <button onClick={handleAddNewRule}>Add new Rule</button>
+                <RuleActionBuilder elementId={elementId} actionRules={clusters[index].rules} onChange={handleRulesUpdate}/>
+            </RulesContainer><br/>
             <ActionsContainer>
-                { clusters[index].actions.map((_, actionIndex) => <Action clusters={clusters} clusterIndex={index} actionIndex={actionIndex} setRuleClusters={setRuleClusters}/>) }
-            </ActionsContainer>
-            <button onClick={handleAddNewAction}>Add new Action</button>
+                <RuleActionBuilder actionRules={clusters[index].actions} onChange={handleActionsUpdate}/>
+            </ActionsContainer><br/>
         </ClusterContainer>
     );
 }

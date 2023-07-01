@@ -1,4 +1,4 @@
-import { Element, getElementById } from "./element";
+import { Element, RuleAction, getElementById } from "./element";
 import { Grid } from "./grid";
 import { Tool } from "./tools";
 import { Brush } from "./tools/brush";
@@ -56,6 +56,13 @@ export class Game {
             });
 
             if(clusterCheck) {
+
+                // TODO: Maybe a better way of doing this to avoid double loop ? (run actions until one breaks, and then revert all ?)
+                const canRunActions: boolean = ruleCluster.actions.every((action: RuleAction) => {
+                    return this.dataGrid.getElementAtByOffset(x, y, action.offsetX, action.offsetY) !== null;
+                });
+
+                if(!canRunActions) break;
                 
                 for(const action of ruleCluster.actions) {
                     const newX = action.offsetX + x;

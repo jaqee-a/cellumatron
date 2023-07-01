@@ -20,7 +20,7 @@ export function Element() {
     });
 
     useEffect(()=>{
-         const element = getElementById(selectedID);
+        const element = getElementById(selectedID);
         setId(element.id);
         setName(element.name);
         setColor(element.color.hex);
@@ -58,7 +58,7 @@ export function Element() {
                     <RulesContainer>
                         {
                             ruleClusters.map((_, index) => 
-                                    <RuleCluster index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} /> )
+                                    <RuleCluster elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} /> )
                         }
                     </RulesContainer>
                 </Collapsable>
