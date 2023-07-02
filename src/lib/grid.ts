@@ -37,8 +37,8 @@ export class Grid {
             return null;
         }
 
-        const comparatorGrid: number[][] =
-            (newY > y) || (newY === y && newX < x) ? this.replacementGrid : this.grid;
+        const comparatorGrid: number[][] = this.replacementGrid;
+            // (newY > y) || (newY === y && newX < x) ? this.replacementGrid : this.grid;
 
         return comparatorGrid[newX][newY];
     }
