@@ -65,11 +65,11 @@ export function Element() {
                     <label>Color</label>
                     <Input type="color" value={color} onChange={handleColorChange}/> 
                 </MetaInput>
-                <Collapsable title="Rules" defaultState="collapsed">
+                <Collapsable title="Rules" defaultState="expanded">
                     <RulesContainer>
                         {
                             ruleClusters.map((_, index) => 
-                                    <div>
+                                    <div key={index}>
                                         <button onClick={()=>{handleDeleteRuleAction(index)}}>Delete</button>
                                         <button onClick={()=>{handleDuplicateRuleAction(index)}}>Duplicate</button>
                                         <RuleCluster elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} />

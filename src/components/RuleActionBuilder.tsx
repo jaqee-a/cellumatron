@@ -103,7 +103,7 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
                 <GridContainer>
                     {
                         [].constructor(Math.pow(size*2+1, 2)).fill(0).map((_: number, index: number) => { 
-                            return <Block blockColor={getBlockColorByIndex(index)} onClick={()=>handleClick(index)}/>
+                            return <Block key={index} blockcolor={getBlockColorByIndex(index)} onClick={()=>handleClick(index)}/>
                         })
                     }
                 </GridContainer>
@@ -111,8 +111,8 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
 }
 
 
-const Block = styled.div<{blockColor: string}>`
-    background-color: ${(props)=>props.blockColor};
+const Block = styled.div<{blockcolor: string}>`
+    background-color: ${(props)=>props.blockcolor};
     width: 30px;
     height: 30px;
     border: solid 1px black;
