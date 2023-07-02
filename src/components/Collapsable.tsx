@@ -10,10 +10,10 @@ interface CollapsableProps {
 
 
 export function Collapsable({title, defaultState, children}: CollapsableProps) {
-    const [state, setState] = useState<boolean>(defaultState === 'collapsed');
+    const [state, setState] = useState<number>(defaultState === 'collapsed' ? 0 : 1);
 
     const handleClick = () => {
-        setState(!state);
+        setState((state+1)%2);
     }
 
     return (<div>
@@ -43,7 +43,7 @@ const CheckBox         = styled.input`
 `;
 
 const TitleContainer   = styled.div``;
-const ContentContainer = styled.div<{collapsed: boolean}>`
+const ContentContainer = styled.div<{collapsed: number}>`
     display: ${(props)=>props.collapsed ? 'none' : 'block'};
 `;
 

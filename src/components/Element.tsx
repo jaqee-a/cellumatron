@@ -65,7 +65,7 @@ export function Element() {
                     <label>Color</label>
                     <Input type="color" value={color} onChange={handleColorChange}/> 
                 </MetaInput>
-                <Collapsable title="Rules" defaultState="expanded">
+                <Collapsable title="Rules" defaultState={'collapsed'}>
                     <RulesContainer>
                         {
                             ruleClusters.map((_, index) => 
