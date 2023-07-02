@@ -55,15 +55,9 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
         return element.color.hex;
     }
 
-    const handleClick = (index: number) => {
-        // if(index === size*2+1+size) return;
 
-        const [x, y] = get2dIndices(index);
-        
-        const newNeighbours: NeighbourDict = {...neighbours};
-        newNeighbours[`${x}-${y}`].element = ( newNeighbours[`${x}-${y}`].element + 1 ) % (elementsCount + 1);
+    const updateRuleActionArray = (newNeighbours: NeighbourDict) => {
         setNeighbours(newNeighbours);
-
         // Fire event
         const ruleActions: Array<RuleAction> = 
                 Object.values(neighbours).filter((actionRule: RuleAction) => {
@@ -75,7 +69,37 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
                 });
         onChange(ruleActions);
     }
+
+    const handleClick = (index: number) => {
+        // if(index === size*2+1+size) return;
+
+        const [x, y] = get2dIndices(index);
+        
+        const newNeighbours: NeighbourDict = {...neighbours};
+        newNeighbours[`${x}-${y}`].element = ( newNeighbours[`${x}-${y}`].element + 1 ) % (elementsCount + 1);
+
+        updateRuleActionArray(newNeighbours);
+        
+    }
+
+    const handleGridRotation = () => {
+        const newNeighbours: NeighbourDict = {};
+
+        const allNeighboursArray: Array<RuleAction> = Object.values(neighbours);
+        allNeighboursArray.forEach((neighbour: RuleAction) => {
+            const newX = -neighbour.offsetY;
+            const newY = neighbour.offsetX;
+            
+            neighbour.offsetX = newX;
+            neighbour.offsetY = newY;
+            newNeighbours[`${newX}-${newY}`] = neighbour;
+        });
+
+        updateRuleActionArray(newNeighbours);
+    }
+
     return (<div>
+                <button onClick={handleGridRotation}>Rotate</button>
                 <GridContainer>
                     {
                         [].constructor(Math.pow(size*2+1, 2)).fill(0).map((_: number, index: number) => { 

@@ -51,6 +51,12 @@ export function Element() {
         setRuleClusters(newClusters);
     }
 
+    const handleDuplicateRuleAction = (index: number) => {
+        const dup: RuleClusterStructure = {...ruleClusters[index]};
+        const newClusters: Array<RuleClusterStructure> = [...ruleClusters, dup];
+        setRuleClusters(newClusters);
+    }
+
     return (
             <ElementContainer>
                 <MetaInput>
@@ -65,6 +71,7 @@ export function Element() {
                             ruleClusters.map((_, index) => 
                                     <div>
                                         <button onClick={()=>{handleDeleteRuleAction(index)}}>Delete</button>
+                                        <button onClick={()=>{handleDuplicateRuleAction(index)}}>Duplicate</button>
                                         <RuleCluster elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} />
                                     </div>)
                         }
