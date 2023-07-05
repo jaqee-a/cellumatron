@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { BiDuplicate, BiTrash } from 'react-icons/bi';
 import { RuleAction, RuleCluster as RuleClusterStructure } from "../lib/element";
 import { RuleActionBuilder } from "./RuleActionBuilder";
+import { DragEventHandler } from "react";
 
 interface RuleClusterProps {
     index: number;
@@ -10,9 +11,11 @@ interface RuleClusterProps {
     setRuleClusters: Function;
     deleteClusterCallback: Function;
     duplicateClusterCallback: Function;
+    onDragStart: DragEventHandler;
+    onDragEnd: DragEventHandler;
 };
 
-export function RuleCluster({deleteClusterCallback, duplicateClusterCallback, elementId, index, clusters, setRuleClusters}: RuleClusterProps) {
+export function RuleCluster({onDragEnd, onDragStart, deleteClusterCallback, duplicateClusterCallback, elementId, index, clusters, setRuleClusters}: RuleClusterProps) {
 
     const handleRulesUpdate = (rules: Array<RuleAction>) => {
         const newClusters = structuredClone(clusters);
@@ -27,7 +30,7 @@ export function RuleCluster({deleteClusterCallback, duplicateClusterCallback, el
     }
 
     return (
-        <div>
+        <div draggable={true} onDragStart={onDragStart} onDragEnd={onDragEnd}>
             <ClusterOptionsContainer>
                 <OptionButton onClick={()=>{deleteClusterCallback(index)}}>
                     <BiTrash size={24}/>
