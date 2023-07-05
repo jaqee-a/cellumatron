@@ -1,5 +1,4 @@
 import { styled } from "styled-components"
-import { BiDuplicate, BiTrash } from 'react-icons/bi';
 import { RuleCluster } from "./RuleCluster";
 import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { RuleCluster as RuleClusterStructure, getElementById } from "../lib/element";
@@ -47,12 +46,12 @@ export function Element() {
         dispatch(updateElements({ id, name, color, ruleClusters }));
     }
 
-    const handleDeleteRuleAction = (index: number) => {
+    const handleDeleteCluster = (index: number) => {
         const newClusters = ruleClusters.filter((_, idx: number) => idx!==index);
         setRuleClusters(newClusters);
     }
 
-    const handleDuplicateRuleAction = (index: number) => {
+    const handleDuplicateCluster = (index: number) => {
         const dup: RuleClusterStructure = {...ruleClusters[index]};
         const newClusters: Array<RuleClusterStructure> = [...ruleClusters, dup];
         setRuleClusters(newClusters);
@@ -70,17 +69,7 @@ export function Element() {
                     <RulesContainer>
                         {
                             ruleClusters.map((_, index) => 
-                                    <div key={index}>
-                                        <ClusterOptionsContainer>
-                                            <OptionButton onClick={()=>{handleDeleteRuleAction(index)}}>
-                                                <BiTrash size={24}/>
-                                            </OptionButton>
-                                            <OptionButton onClick={()=>{handleDuplicateRuleAction(index)}}>
-                                                <BiDuplicate size={24} />
-                                            </OptionButton>
-                                        </ClusterOptionsContainer>
-                                        <RuleCluster elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} />
-                                    </div>)
+                                <RuleCluster deleteClusterCallback={handleDeleteCluster} duplicateClusterCallback={handleDuplicateCluster} key={index} elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} />)
                         }
                     </RulesContainer>
                 </Collapsable>
@@ -90,24 +79,11 @@ export function Element() {
     );
 }
 
-const OptionButton = styled.button`
-    border-radius: 10px;
-    padding-inline: 2rem;
-    padding-block: 0.2rem;
-    background-color: #e1e1e1;
-    border-style: none;
-    margin-block: 12px;
-    &:hover {
-        opacity: 0.7;
-        cursor: pointer;
-    }
-`;
-
-const ClusterOptionsContainer = styled.div`
+const RulesContainer = styled.div`
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
 `;
-
-const RulesContainer = styled.div``;
 
 const MetaInput = styled.div`
     display: flex;

@@ -100,7 +100,7 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
         updateRuleActionArray(newNeighbours);
     }
 
-    return (<div>
+    return (<BlockContainer>
                 <OptionButtonContainer>
                     <OptionButton onClick={()=>handleGridRotation(-90)}>
                         <FaRotateLeft size={24} />
@@ -116,17 +116,25 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
                         })
                     }
                 </GridContainer>
-            </div>);
+            </BlockContainer>);
 }
+
+const BlockContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+`;
 
 const OptionButtonContainer = styled.div`
     display: flex;
+    gap: 0.5rem;
+    justify-content: center;
 `;
 
 const OptionButton = styled.div`
     background-color: #e1e1e1;
     border-radius: 50%;
-    width: 50px;
+    width: 40px;
     aspect-ratio: 1;
     display: grid;
     place-items: center;
