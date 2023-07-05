@@ -13,6 +13,8 @@ export function Element() {
     const [id  , setId] = useState<number>(0);
     const [color, setColor] = useState<string>('#ffffff');
     const [ruleClusters, setRuleClusters] = useState<RuleClusterStructure[]>([]);
+    const [hoveredDropTargetIndex, setHoveredDropTargetIndex] = useState<number | undefined>(undefined);
+    const [draggingIndex, setDraggingIndex] = useState<number | undefined>(undefined);
 
     const dispatch = useDispatch();
     const selectedID = useSelector((state: CellumatronState)=> {
@@ -46,15 +48,46 @@ export function Element() {
         dispatch(updateElements({ id, name, color, ruleClusters }));
     }
 
-    const handleDeleteRuleAction = (index: number) => {
+    const handleDeleteCluster = (index: number) => {
         const newClusters = ruleClusters.filter((_, idx: number) => idx!==index);
         setRuleClusters(newClusters);
     }
 
-    const handleDuplicateRuleAction = (index: number) => {
+    const handleDuplicateCluster = (index: number) => {
         const dup: RuleClusterStructure = {...ruleClusters[index]};
         const newClusters: Array<RuleClusterStructure> = [...ruleClusters, dup];
         setRuleClusters(newClusters);
+    }
+
+    const handleDropTargetEnter = (index: number) => {
+        setHoveredDropTargetIndex(index);
+    };
+    const handleDropTargetLeave = () => {
+        setHoveredDropTargetIndex(undefined);
+    };
+    const handleDrop = () => {
+        const index: number = hoveredDropTargetIndex!;
+        const clusterIndex: number = draggingIndex!;
+
+
+        const cluster: RuleClusterStructure = ruleClusters[clusterIndex];
+        const newClusters: Array<RuleClusterStructure> = 
+            ruleClusters.filter((_: RuleClusterStructure, idx: number) => idx!==clusterIndex);
+
+        newClusters.splice(index, 0, cluster);
+
+        setRuleClusters(newClusters);
+
+        setHoveredDropTargetIndex(undefined);
+    };
+    const handleDragOverTarget = (e: BaseSyntheticEvent) => {
+        e.preventDefault();
+    }
+    const handleDragStart = (index: number) => {
+        setDraggingIndex(index);
+    }
+    const handleDragEnd = () => {
+        setDraggingIndex(undefined);
     }
 
     return (
@@ -69,11 +102,23 @@ export function Element() {
                     <RulesContainer>
                         {
                             ruleClusters.map((_, index) => 
-                                    <div key={index}>
-                                        <button onClick={()=>{handleDeleteRuleAction(index)}}>Delete</button>
-                                        <button onClick={()=>{handleDuplicateRuleAction(index)}}>Duplicate</button>
-                                        <RuleCluster elementId={id} index={index} clusters={ruleClusters} setRuleClusters={setRuleClusters} />
-                                    </div>)
+                                <div key={index}>
+                                    <DropTarget 
+                                            show={draggingIndex !== undefined}
+                                            onDragEnter={(_: BaseSyntheticEvent)=>handleDropTargetEnter(index)}
+                                            onDragLeave={handleDropTargetLeave}
+                                            onDragOver={handleDragOverTarget}
+                                            onDrop={handleDrop} 
+                                            isDraggableOver={hoveredDropTargetIndex === index}/>
+                                    <RuleCluster 
+                                            onDragStart={(_: BaseSyntheticEvent)=>handleDragStart(index)}
+                                            onDragEnd={handleDragEnd}
+                                            deleteClusterCallback={handleDeleteCluster}
+                                            duplicateClusterCallback={handleDuplicateCluster} 
+                                            elementId={id} index={index} 
+                                            clusters={ruleClusters} 
+                                            setRuleClusters={setRuleClusters} />
+                                </div>)
                         }
                     </RulesContainer>
                 </Collapsable>
@@ -83,9 +128,20 @@ export function Element() {
     );
 }
 
+const  DropTarget = styled.div<{show: boolean, isDraggableOver: boolean}>`
+    width: 100%;
+    height: 1rem;
+    margin-bottom: 1rem;
+    border: 1px dashed ${(props)=>props.isDraggableOver?'red':'black'};
+    border-style: dashed;
+    display: ${(props)=>props.show?'grid':'none'};
+    place-items: center;
+`;
 
 const RulesContainer = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 `;
 
 const MetaInput = styled.div`

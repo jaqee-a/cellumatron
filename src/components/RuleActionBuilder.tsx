@@ -3,6 +3,8 @@ import { styled } from "styled-components";
 import { RuleAction, getElementById, Element } from "../lib/element";
 import { useSelector } from "react-redux";
 import { CellumatronState } from "../redux/store";
+import { FaRotateLeft, FaRotateRight } from "react-icons/fa6";
+import { AngleType, getRotationFunction } from "../lib/utils";
 
 type EncodedPosition = `${number}-${number}`;
 
@@ -82,24 +84,31 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
         
     }
 
-    const handleGridRotation = () => {
+    const handleGridRotation = (deg: number) => {
         const newNeighbours: NeighbourDict = {};
 
+        const rotate = getRotationFunction(deg, AngleType.DEGREE);
         const allNeighboursArray: Array<RuleAction> = Object.values(neighbours);
         allNeighboursArray.forEach((neighbour: RuleAction) => {
-            const newX = -neighbour.offsetY;
-            const newY = neighbour.offsetX;
-            
-            neighbour.offsetX = newX;
-            neighbour.offsetY = newY;
-            newNeighbours[`${newX}-${newY}`] = neighbour;
+            const {x, y} = rotate(neighbour.offsetX, neighbour.offsetY);
+
+            neighbour.offsetX = x;
+            neighbour.offsetY = y;
+            newNeighbours[`${x}-${y}`] = neighbour;
         });
 
         updateRuleActionArray(newNeighbours);
     }
 
-    return (<div>
-                <button onClick={handleGridRotation}>Rotate</button>
+    return (<BlockContainer>
+                <OptionButtonContainer>
+                    <OptionButton onClick={()=>handleGridRotation(-90)}>
+                        <FaRotateLeft size={24} />
+                    </OptionButton>
+                    <OptionButton onClick={()=>handleGridRotation(90)}>
+                        <FaRotateRight size={24} />
+                    </OptionButton>
+                </OptionButtonContainer>
                 <GridContainer>
                     {
                         [].constructor(Math.pow(size*2+1, 2)).fill(0).map((_: number, index: number) => { 
@@ -107,9 +116,34 @@ export function RuleActionBuilder({elementId, actionRules, onChange}: RuleAction
                         })
                     }
                 </GridContainer>
-            </div>);
+            </BlockContainer>);
 }
 
+const BlockContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+`;
+
+const OptionButtonContainer = styled.div`
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+`;
+
+const OptionButton = styled.div`
+    background-color: #e1e1e1;
+    border-radius: 50%;
+    width: 40px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+
+    &:hover {
+        opacity: 0.7;
+        cursor: pointer;
+    }
+`;
 
 const Block = styled.div<{blockcolor: string}>`
     background-color: ${(props)=>props.blockcolor};
@@ -123,6 +157,7 @@ const Block = styled.div<{blockcolor: string}>`
 `;
 
 const GridContainer = styled.div`
+    width: fit-content;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
