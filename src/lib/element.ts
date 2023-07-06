@@ -1,3 +1,4 @@
+import { ElementRedux } from "../redux/elementRedux";
 import { Color } from "./color";
 
 export interface RuleAction {
@@ -130,7 +131,7 @@ export function loadAllElements(elements: Array<Element>): void {
     }
 }
 
-export function getAllElementsForRedux(): Array<{id: number, name: string, color: string}> {
+export function getAllElementsForRedux(): Array<ElementRedux> {
     return CUSTOM_ELEMENTS.map((value: Element)=>{
 
         const res: {id: number, name: string, color: string} = {

@@ -5,7 +5,6 @@ import { RuleCluster as RuleClusterStructure, getElementById } from "../lib/elem
 import { useDispatch, useSelector } from "react-redux";
 import { updateElements } from "../redux/elementRedux";
 import { CellumatronState } from "../redux/store";
-import { Input } from "./Input";
 import { Collapsable } from "./Collapsable";
 
 export function Element() {
@@ -96,7 +95,7 @@ export function Element() {
                     <label>Name</label>
                     <Input type="text" value={name} onChange={handleNameChange}/>
                     <label>Color</label>
-                    <Input type="color" value={color} onChange={handleColorChange}/> 
+                    <input type="color" value={color} onChange={handleColorChange}/> 
                 </MetaInput>
                 <Collapsable title="Rules" defaultState={'collapsed'}>
                     <RulesContainer>
@@ -104,12 +103,12 @@ export function Element() {
                             ruleClusters.map((_, index) => 
                                 <div key={index}>
                                     <DropTarget 
-                                            show={draggingIndex !== undefined}
+                                            show={draggingIndex !== undefined?1:0}
                                             onDragEnter={(_: BaseSyntheticEvent)=>handleDropTargetEnter(index)}
                                             onDragLeave={handleDropTargetLeave}
                                             onDragOver={handleDragOverTarget}
                                             onDrop={handleDrop} 
-                                            isDraggableOver={hoveredDropTargetIndex === index}/>
+                                            draggableover={hoveredDropTargetIndex === index?1:0}/>
                                     <RuleCluster 
                                             onDragStart={(_: BaseSyntheticEvent)=>handleDragStart(index)}
                                             onDragEnd={handleDragEnd}
@@ -128,11 +127,11 @@ export function Element() {
     );
 }
 
-const  DropTarget = styled.div<{show: boolean, isDraggableOver: boolean}>`
+const  DropTarget = styled.div<{show: number, draggableover: number}>`
     width: 100%;
     height: 1rem;
     margin-bottom: 1rem;
-    border: 1px dashed ${(props)=>props.isDraggableOver?'red':'black'};
+    border: 1px dashed ${(props)=>props.draggableover?'red':'black'};
     border-style: dashed;
     display: ${(props)=>props.show?'grid':'none'};
     place-items: center;
@@ -150,4 +149,12 @@ const MetaInput = styled.div`
 `;
 
 const ElementContainer = styled.div`
+`;
+
+const Input = styled.input`
+    border: none;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #e1e1e1;
+    padding-left: 0.5rem;
 `;

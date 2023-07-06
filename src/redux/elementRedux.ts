@@ -3,9 +3,14 @@ import { createNewElement, loadAllElements, getAllElementsForRedux, updateElemen
 import { Color } from "../lib/color";
 import { Brush } from "../lib/tools/brush";
 
+export interface ElementRedux {
+    id: number;
+    name: string;
+    color: string;
+}
 
 export interface ElementReduxInitialState {
-    elements: Array<any>;
+    elements: Array<ElementRedux>;
     selectedElement: number;
 };
 
